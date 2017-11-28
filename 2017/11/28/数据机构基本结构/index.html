@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="数据结构," />
 
 
 
@@ -79,13 +79,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Guo">
-<meta property="og:url" content="http://guowenyuan.com/index.html">
+<meta name="description" content="数据结构基本概念  数据元素：是组成数据的，有一定意义的基本单位，在计算机当中通常作为整体处理。 数据项：一个数据元素可以由若干个数据项组成，数据项是数据结构当中的最小组成部分 简单来说，比如人类的数据元素是人，那么人的数据项就是身高，体重，年龄等等一系列共性抽象的数据项。">
+<meta name="keywords" content="数据结构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据机构基本概念">
+<meta property="og:url" content="http://guowenyuan.com/2017/11/28/数据机构基本结构/index.html">
 <meta property="og:site_name" content="Guo">
+<meta property="og:description" content="数据结构基本概念  数据元素：是组成数据的，有一定意义的基本单位，在计算机当中通常作为整体处理。 数据项：一个数据元素可以由若干个数据项组成，数据项是数据结构当中的最小组成部分 简单来说，比如人类的数据元素是人，那么人的数据项就是身高，体重，年龄等等一系列共性抽象的数据项。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-28T10:47:22.763Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Guo">
+<meta name="twitter:title" content="数据机构基本概念">
+<meta name="twitter:description" content="数据结构基本概念  数据元素：是组成数据的，有一定意义的基本单位，在计算机当中通常作为整体处理。 数据项：一个数据元素可以由若干个数据项组成，数据项是数据结构当中的最小组成部分 简单来说，比如人类的数据元素是人，那么人的数据项就是身高，体重，年龄等等一系列共性抽象的数据项。">
 
 
 
@@ -115,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://guowenyuan.com/"/>
+  <link rel="canonical" href="http://guowenyuan.com/2017/11/28/数据机构基本结构/"/>
 
 
 
 
 
-  <title>Guo</title>
+  <title>数据机构基本概念 | Guo</title>
   
 
 
@@ -140,8 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -204,9 +208,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -236,9 +240,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/28/数据机构基本结构/" itemprop="url">数据机构基本概念</a></h1>
+          <h1 class="post-title" itemprop="name headline">数据机构基本概念</h1>
         
 
         <div class="post-meta">
@@ -288,20 +290,44 @@
       
 
       
-        
-          <h1 id="数据结构基本概念"><a href="#数据结构基本概念" class="headerlink" title="数据结构基本概念"></a>数据结构基本概念</h1><blockquote>
+        <h1 id="数据结构基本概念"><a href="#数据结构基本概念" class="headerlink" title="数据结构基本概念"></a>数据结构基本概念</h1><blockquote>
 <ul>
 <li>数据元素：是组成数据的，有一定意义的基本单位，在计算机当中通常作为整体处理。</li>
 <li><p>数据项：一个数据元素可以由若干个数据项组成，数据项是数据结构当中的最小组成部分</p>
 <p><strong>简单来说，比如人类的数据元素是人，那么人的数据项就是身高，体重，年龄等等一系列共性抽象的数据项。</strong></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/11/28/数据机构基本结构/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+<a id="more"></a>
+<p><strong>那么数据结构，故名思意：是相互之间存在一种或多种特定关系的数据元素的集合简单来说就是一系列数据按照不同的方式排列或者关联的结构。</strong></p>
+</li>
+</ul>
+</blockquote>
+<p>那么看完了基本的定义和解析，我们就一起来看一下数据结构的特定关系</p>
+<p>##逻辑结构：是指数据对象中数据元素之间的相互关系<br>  逻辑结构分为四种：<br>-</p>
+<ul>
+<li>集合结构：就是该结构当中的数据元素除了同属于一个集合外，它们没有任何关系。</li>
+</ul>
+<p>![图形结构]<br>(/images/数据结构-集合结构.png)</p>
+<ul>
+<li><p>线性结构：线性结构中的数据元素是一对一的关系</p>
+<p>有且只有一个关联对象，无论是上级的还是下级的，我们都叫做线性<br>结构</p>
+</li>
+<li>树形结构：该结构中的数据元素是一对多的关系<br> 例如我们的公司，一个老板管理多个部门主管，一个部门主管管理多<br>个经理，一个经理管理多个组长，一个组长管理多个组员。该结构就是<br>树性结构</li>
+<li>图形结构：该结构中的数据元素是多对多的关系</li>
+</ul>
+<p>##物理结构：是指数据的逻辑结构在计算机当中的存储形式</p>
+<ul>
+<li><strong>顺序存储结构：是指把数据元素存放在地址连续的存储单元里，其数据间的逻辑关系如下：</strong><br>1，2，3，4，5，6，7，8，9，10</li>
+</ul>
+<p>他们按照顺序在内存当中排列，我们通过相关的指针找到该类型可以很快定位该类型当中的某个对象。</p>
+<p>例如：排队，我们在某一个空间内（餐厅）按照顺序进行排队，起点是点餐台的 位置，终点在该店面的门口，那么他的长度就是从点餐台到餐厅的门口，顺序从餐台到门口，依次递增。例如我们的数组。</p>
+<ul>
+<li><strong>链形存储结构：是指把数据元素存放在任意的存储单元里</strong></li>
+</ul>
+<p>如下：   2，1，4        5，   7，    10     </p>
+<p> 他们在内存任意位置存储，在上下级之间存在某种关联，</p>
+<p>例如:字典，我们字典的存储方式就是链形的，健和值对应不需要健和值在同一个位置，只需要知道健所相对应的值地址在哪里就可以了。</p>
+<p><strong>C#当中的数据类型分为：值类型和引用类型</strong><br>值类型简单来说就是不可再进行分割的基本类型，例如int，float</p>
+<p>  而引用类型是由若干个类型组成的，可以再进行分解的 例如 class  数组</p>
+
       
     </div>
     
@@ -316,14 +342,20 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/数据结构/" rel="tag"># 数据结构</a>
+          
+        </div>
+      
+
+      
+      
+      
 
       
 
       
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -333,10 +365,11 @@
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -344,6 +377,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -364,8 +401,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -418,6 +464,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#数据结构基本概念"><span class="nav-number">1.</span> <span class="nav-text">数据结构基本概念</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -551,6 +613,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
 
   
 
