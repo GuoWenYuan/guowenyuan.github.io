@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="文中所有的线程例子语言来自C#，协程例子来自unity封装好的。 #线程         首先我们来看一下线程是什么。         在很多地方介绍线程时，称其为轻量级进程。我们从简单的生活例子来解释以下系统，进程，线程之间的关系。         首先我们将系统比作为一个工厂，那么进程就是系统当中运行的一个工程，我">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unity协程与线程">
+<meta property="og:url" content="http://guowenyuan.com/2017/11/29/Unity协程与线程/index.html">
+<meta property="og:site_name" content="Guo">
+<meta property="og:description" content="文中所有的线程例子语言来自C#，协程例子来自unity封装好的。 #线程         首先我们来看一下线程是什么。         在很多地方介绍线程时，称其为轻量级进程。我们从简单的生活例子来解释以下系统，进程，线程之间的关系。         首先我们将系统比作为一个工厂，那么进程就是系统当中运行的一个工程，我们比作为一个工厂的某个部门，">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-29T12:52:25.191Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Unity协程与线程">
+<meta name="twitter:description" content="文中所有的线程例子语言来自C#，协程例子来自unity封装好的。 #线程         首先我们来看一下线程是什么。         在很多地方介绍线程时，称其为轻量级进程。我们从简单的生活例子来解释以下系统，进程，线程之间的关系。         首先我们将系统比作为一个工厂，那么进程就是系统当中运行的一个工程，我们比作为一个工厂的某个部门，">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://guowenyuan.com/2017/11/29/Unity协程与线程/"/>
+
+
+
+
+
+  <title>Unity协程与线程 | Guo</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Guo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://guowenyuan.com/2017/11/29/Unity协程与线程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Guo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Guo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Unity协程与线程</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-29T20:46:33+08:00">
+                2017-11-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>文中所有的线程例子语言来自C#，协程例子来自unity封装好的。</p>
+<p>#线程<br>         首先我们来看一下线程是什么。<br>         在很多地方介绍线程时，称其为轻量级进程。我们从简单的生活例子来解释以下系统，进程，线程之间的关系。<br>         首先我们将系统比作为一个工厂，那么进程就是系统当中运行的一个工程，我们比作为一个工厂的某个部门，<a id="more"></a><br>         比如系统是一个制造业的工厂，那么进程就是其中的比如专业做热水器的一个部门。那么他们的开工与否是由工厂统一调度，<br>         而该热水器部门人员的工作则是由热水器这个部门来统一调度。那么我们可以将热水器部门的人员比作我们的线程。那么由<br>         这个例子可见，热水器部门的员工是由热水器部门统一调度或者分配的，员工是作为工厂最基层的员工由工厂统一管理的。<br> <strong>所以线程是系统独立调度和分配的基本单位</strong></p>
+<pre><code>那么理清楚了系统，进程，和线程的基本关系，我们就来看看线程是怎么样来进行工作的。
+老王王是一家工厂的热水器部门的基本员工，他有自己的工作台（独立栈），每天他等待
+热水器部门的任务，进行相应的工作，今天部门下达了一个任务，要他去对已经组装好的热
+水器进行装箱的操作。但是在老王去拿热水器的时候（部门内数据与产品共享。堆共享），
+他的同事老陈告诉他，还有一台没有组装好，得等一等，于是老王安排他的学徒小赵在这里
+等待最后一台安装完毕后将其拿回去装箱，老王先行回去装箱（老王就绪，线程的就绪状态，
+可以执行），而学徒小赵只能等待最后一台组装完成后才能进行下一步装箱（小赵等待，线程的
+阻塞状态）。老王回去后就开始进行装箱的操作（线程的运行状态）。公司这时候突然说要加快进度，
+于是又派了几个人去和老王一起装箱(多线程，并发执行)。
+</code></pre><p>我们可以看下代码（运行环境：unity，语言：C#）<br>‘</p>
+<pre><code>  private void Start()
+{
+ //老王
+ thread = new Thread(Test);
+ //小赵
+ thread01 = new Thread(Test);
+ //老王开始工作
+ thread.Start();
+ }
+  public void Test()
+{
+    //老王将东西取回装箱
+    //开启另一个线程  让小赵等待
+    thread01.Start();
+    for (int i = 0; i &lt; 10; i++)
+    {
+        Debug.Log(&quot;老王开始装箱&quot;);
+
+    }}
+public void Test01()
+ {
+Debug.Log(&quot;小赵等待&quot;);   
+ }
+</code></pre><p>‘<br>  <strong>从上文中我们可以看出线程的几个特征：首先线程是有独立的栈来进行工作的，其次在统一进程当中，堆是共享的，线程有三种执行状态：就绪，阻塞，执行，多线程可以并发执行。</strong><br><strong>但在这里我们要注意一下，并发的线程逻辑简单来说是这样的，有A,B两个线程，程序现在A当中执行，再跳回B，再转回A，执行方式是进行了伪并发。我们以上方老王和同时合作进行开发为例，假设老王装箱要进行20次操作</strong></p>
+<pre><code>   private void Start()
+{
+   //老王开始装箱工程
+   thread = new Thread(TestA);
+    thread.Start();   
+}
+   public void TestA()
+{
+
+    for (int i = 0; i &lt; 20; i++)
+    {
+        Debug.Log(&quot;老王装箱&quot;);
+
+    }
+</code></pre><p>   }</p>
+<p><strong>那么在unity面板当中会Debug出20次老王装箱，也就是说老王进行了20次的装箱操作</strong></p>
+<p><strong>那么我们如果给老王配一个同事进行的话</strong></p>
+<pre><code>  private void Start()
+  {
+    thread = new Thread(TestA);
+    thread01 = new Thread(TestB);
+    thread.Start();
+    thread01.Start();
+ }
+    public void TestA()
+ {
+     for (int i = 0; i &lt; 10; i++)
+    {
+     Debug.Log(&quot;老王装箱&quot;);
+     }
+ }
+    public void TestB()
+ {
+    for (int i = 0; i &lt; 10; i++)
+{
+    Debug.Log(&quot;同事装箱&quot;);
+}
+}
+}
+</code></pre><p><strong>那么在unity面板中的Debug变成了老王装箱，同事装箱，老王装箱，同事装箱。。。。各进行了10次,同时我们发现他们的运行顺序是交叉运行的，老王装一次，同事装一次，这就是我们所说的并发</strong></p>
+<p>我们来看一下啊这样多线程的好处，好处显而易见，我们每个线程干的事少了，速度快了，运行效率高了。但是，真的是这样的吗，同样的以老王的例子来举例，windows系统去开辟新的线程是需要耗费性能和空间的。也就是说如果这个热水器的部门需要给老王加帮手，他就需要招人，招人需要成本。用系统的话来说，就是需要损耗性能和空间。我对于协成的理解在于协助线程去做一些事情，简单来说，就是不再给老王招人，而是招学徒，这样的话老王既能有效率的去做一些事情，学徒们的成本也要低的多，我们把这个学徒看作协成。（网上看到某位知乎老哥的一个说法，新开辟一个线程所占用的空间为34Mb的话，那么一个协成只需要2KB,有待求证，这里只做分享，不做论证）</p>
+<p>#协程</p>
+<p>协程这里我们只做unity内部协成的分析，很多同学认为协成就是线程的缩小版，或者说是简化版，这个逻辑我不敢断言对错，但至少在我看来是不准确的。虽然协成和线程一样有自己独立的栈，共享的堆（学徒和老王的关系），但线程是由系统进行调用分配，而协成是由我们开发者进行调用分配的，本质的管理方式和单位不同。那么说完了废话，我们就来看看unity当中的协成是如何进行工作的。附上代码：</p>
+<pre><code>     private void Start()
+{
+    //开启协成
+    StartCoroutine(Test01());
+}
+public IEnumerator Test01()
+{   
+    //等待2s后执行
+    yield return new WaitForSeconds(2);
+    for (int i = 0; i &lt; 10; i++)
+    {
+        print(&quot;1&quot;);
+    }
+}
+</code></pre><p> 写完上述代码之后，在Unity的面板等待程序运行了2s之后输出了10个1。</p>
+<p>上述代码的yield return 之后就是程序在等待后方的代码执行完成之后才继续执行相应的代码</p>
+<p>那么在同一时间开启两个协程，协程会不会像线程一样并发执行呢。我们来做个例子，代码如下：</p>
+<pre><code>    private void Start()
+{
+     //开启协程
+   StartCoroutine(Test01());
+   StartCoroutine(Test02());
+}
+   public IEnumerator Test01()
+ {   
+    //等待2s后执行
+    yield return new WaitForSeconds(2);
+    for (int i = 0; i &lt; 10; i++)
+    {
+        print(&quot;1&quot;);
+    }
+}
+     public IEnumerator Test02()
+   {
+     yield return new WaitForSeconds(2);
+      for (int i = 0; i &lt; 10; i++)
+     {
+        print(&quot;2&quot;);
+     }
+ }
+</code></pre><p>代码在控制台输出结果为：先输出了10个1，然后才输出了10个2，通过这个例子我们很直观的看出来，协</p>
+<p>程在同一时间是不能一同运行的。</p>
+<p>那么我们就比较出了unity中的协程与线程的区别：他们的分配调用者不同，他们的执行方式也不同，他们所占用的内存空间不同。</p>
+<p>unity中协程，官方称之为coroutine，协同程序，在官方文档中协程由详细的介绍，大家由需求去查阅官方文档即可。简单来说就是协程和MonoBehaviour一样实在主线程运行的，unity会实时检测符合yield return之后的条件的协程继续执行。</p>
+<p>有兴趣的朋友可以通过迭代器的基本方法在C#当中同样实现unity协程的效果。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/28/数据结构基本类型/" rel="next" title="数据结构基本类型">
+                <i class="fa fa-chevron-left"></i> 数据结构基本类型
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Guo</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Guo</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
