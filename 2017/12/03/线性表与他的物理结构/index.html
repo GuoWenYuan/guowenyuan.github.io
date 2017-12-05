@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="#线性表 代码与分析来自与C#  首先我们来看一看线性表的定义是什么：零个或者多个的有限序列 那么我们来举个例子来看看什么叫做零个或者多个有限序列： 小明今天想吃冰激凌：于是他去了一家冰激凌店排队，到场一看，好吗，人山人海，那没办法了， 只能排队了（多个有限序列），小明开始是最后一个（仅有 一个前驱，有限序列的最后一位">
+<meta name="description" content="#线性表 代码与分析来自与C#  首先我们来看一看线性表的定义是什么：零个或者多个的有限序列 那么我们来举个例子来看看什么叫做零个或者多个有限序列：">
 <meta name="keywords" content="数据结构">
 <meta property="og:type" content="article">
 <meta property="og:title" content="线性表与他的物理结构">
 <meta property="og:url" content="http://guowenyuan.com/2017/12/03/线性表与他的物理结构/index.html">
 <meta property="og:site_name" content="Guo">
-<meta property="og:description" content="#线性表 代码与分析来自与C#  首先我们来看一看线性表的定义是什么：零个或者多个的有限序列 那么我们来举个例子来看看什么叫做零个或者多个有限序列： 小明今天想吃冰激凌：于是他去了一家冰激凌店排队，到场一看，好吗，人山人海，那没办法了， 只能排队了（多个有限序列），小明开始是最后一个（仅有 一个前驱，有限序列的最后一位）， 慢慢的他排到了前面（开始有后驱，在线性表当中，有限序列意味着有一个开头，有">
+<meta property="og:description" content="#线性表 代码与分析来自与C#  首先我们来看一看线性表的定义是什么：零个或者多个的有限序列 那么我们来举个例子来看看什么叫做零个或者多个有限序列：">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-12-03T14:14:55.980Z">
+<meta property="og:updated_time" content="2017-12-05T02:03:54.160Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="线性表与他的物理结构">
-<meta name="twitter:description" content="#线性表 代码与分析来自与C#  首先我们来看一看线性表的定义是什么：零个或者多个的有限序列 那么我们来举个例子来看看什么叫做零个或者多个有限序列： 小明今天想吃冰激凌：于是他去了一家冰激凌店排队，到场一看，好吗，人山人海，那没办法了， 只能排队了（多个有限序列），小明开始是最后一个（仅有 一个前驱，有限序列的最后一位）， 慢慢的他排到了前面（开始有后驱，在线性表当中，有限序列意味着有一个开头，有">
+<meta name="twitter:description" content="#线性表 代码与分析来自与C#  首先我们来看一看线性表的定义是什么：零个或者多个的有限序列 那么我们来举个例子来看看什么叫做零个或者多个有限序列：">
 
 
 
@@ -294,7 +294,7 @@
 <p>代码与分析来自与C#</p>
 <hr>
 <p><strong>首先我们来看一看线性表的定义是什么：零个或者多个的有限序列</strong></p>
-<p>那么我们来举个例子来看看什么叫做零个或者多个有限序列：</p>
+<p>那么我们来举个例子来看看什么叫做零个或者多个有限序列：<br><a id="more"></a></p>
 <pre><code>小明今天想吃冰激凌：于是他去了一家冰激凌店排队，到场一看，好吗，人山人海，那没办法了，
 只能排队了（多个有限序列），小明开始是最后一个（仅有 一个前驱，有限序列的最后一位），
 慢慢的他排到了前面（开始有后驱，在线性表当中，有限序列意味着有一个开头，有一个结尾，
@@ -310,13 +310,183 @@
 <pre><code>这时候，突然冰激凌老板出来说，今天是他们的1周年庆典，他随机抽取了一个号码10，所
 以免费为排队在第十个的朋友提供一个月的免费冰激凌。
 </code></pre><p>这时候我们如果要帮老板找到第十个人如何去找呢，最简单的方式是从第一个数到第10个人就可以知道了其相应的地址，这是在现实生活当中我们人数不多的情况下。那么在我们的程序当中，如果要获取第100个元素的位置，那么要从第一个元素数到第100个嘛，那如果是第1000个，10000个呢。</p>
-<p>   ‘’’js:app.js</p>
-<p>   function()<br>{</p>
-<pre><code>int i=0;
+<pre><code> 在程序当中，假如我们有一个int数组，地址是0*000002，一个int占用内存大小为32个单位，
+ 那么第100个元素的值为F（32*100），那么查询的方式为内存大小*要查询的位置，时间复
+ 度为O（1）.
 
-debug.Log(i);
-</code></pre><p>}</p>
-<pre><code>&apos;&apos;&apos;
+这时候有一个女孩过来和小明说，她有些急事，可不可以让她先插个队，小明同意了，于是
+她就站在了小明前面，后面所有人都向后移动了一步。
+</code></pre><p><strong> 这就是我们的插入线性表顺序结构的插入操作，那么我们来分析一下，该插入的最坏时间复杂度是多少，假设小明当前的位置是第二个或者第一个，那么要插入当前的位置，即小明之后的所有人都要向后方去移动一个位置，那么该时间复杂度即为O（n）</strong></p>
+<p>那我们知道了，线性表的顺序结构查询的时间复杂度为O（1），插入的时间复杂度为O（n），删除的原理和插入一样，其他元素需要向前移动一位，时间复杂度同为<br>O（n）。</p>
+<p>线性表的链式存储结构我们下次再来讨论，附上使用C#重写的简易列表：</p>
+<hr>
+<pre><code>public class MyList&lt;T&gt;
+                    {
+    //数组的初始长度
+    private const int _defultCount = 4;
+    private object _root = new object();
+    /// &lt;summary&gt;
+    /// 获取列表的个数
+    /// &lt;/summary&gt;
+    public int Count
+    {
+
+        get {
+            object obj = _root;
+            int itemCount;
+            lock (obj)
+            {
+                itemCount = _index;
+            }
+            return itemCount;
+        }
+    }
+ /// &lt;summary&gt;
+    /// 写入数据，读取数据
+    /// &lt;/summary&gt;
+    /// &lt;param name=&quot;index&quot;&gt;索引&lt;/param&gt;
+    /// &lt;returns&gt;&lt;/returns&gt;
+    public T this[int index]
+    {
+        get {
+            object obj = _root;
+            T result;
+            lock (_root)
+            {
+                result = _item[index];
+            }
+            return result;
+        }
+        set {
+            object obj = _root;
+            lock (obj)
+            {
+                _item[index] = value;
+            }
+        }
+    }
+
+    //列表的最大长度
+    private int _count;
+    private int _index=0;
+    private T[] _item;
+    /// &lt;summary&gt;
+    /// 初始化列表
+    /// &lt;/summary&gt;
+    public MyList()
+    {
+        _item = new T[_defultCount];
+         _count = _defultCount;
+    }
+    /// &lt;summary&gt;
+    ///初始化列表 
+    /// &lt;/summary&gt;
+    /// &lt;param name=&quot;count&quot;&gt;初始化列表的长度&lt;/param&gt;
+    public MyList(int count)
+    {
+        _count = count;
+        _item=new T[_count];
+
+    }
+    /// &lt;summary&gt;
+    /// 增加列表当中的元素
+    /// &lt;/summary&gt;
+    /// &lt;param name=&quot;t&quot;&gt;元素&lt;/param&gt;
+    public void Add(T t)
+    {
+        object obj = _root;
+        lock (_root)
+        {
+            if (_index == _count)
+            {
+                AddRange();
+            }
+            _item[_index] = t;
+            _index++;
+
+        }
+
+    }
+/// &lt;summary&gt;
+/// 插入
+/// &lt;/summary&gt;
+/// &lt;param name=&quot;t&quot;&gt;元素&lt;/param&gt;
+/// &lt;param name=&quot;index&quot;&gt;位置&lt;/param&gt;
+
+ public void Insert(T t,int index)
+    {
+        if (index &gt; _count)
+        {
+            throw new Exception(&quot;Set Out Range&quot;);
+
+        }
+        if (_index == _count)
+        {
+            AddRange();
+        }
+
+        object obj = _root;
+        lock (_root)
+        {
+            InsertList(t, index);
+        }
+    }
+    private void InsertList(T t, int index)
+    {
+        _index += 1;
+        for (int i = _index-1; i&gt;=index; i--)
+        {
+            _item[i + 1] = _item[i];
+            if (i == index)
+            {
+                Console.WriteLine(_item[i]);
+                _item[i] = t;
+                Console.WriteLine(_item[i]);
+                return;
+            }
+
+        }
+
+    }
+
+    /// &lt;summary&gt;
+    /// 增加列表的大小
+    /// &lt;/summary&gt;
+    private void AddRange()
+    {
+
+        T[] t = new T[_count * 2];
+        Array.Copy(_item, 0, t, 0, _item.Length);
+        _item = t;
+        _count = _item.Length;
+
+    }
+
+    }
+</code></pre><hr>
+<p><strong>使用方式</strong></p>
+<pre><code>static void Main(string[] args)
+ {
+
+    MyList&lt;int&gt; lists = new MyList&lt;int&gt;();
+    //增加
+    for (int i = 0; i &lt; 20; i++)
+    {
+        lists.Add(i);
+    }
+    //输出结果20，值为0，1，2，3.。。。19
+    Console.WriteLine(&quot;当前列表的个数为:&quot;+lists.Count); 
+    //赋值
+    lists[10] = 100;
+    //插入
+    lists.Insert(50, 2);
+    //输出结果0，1，50，2.。。8，9，100，11.。。。。19  列表长度为21
+    for (int i = 0; i &lt; lists.Count; i++)
+    {
+        Console.WriteLine(&quot;当前的值为:&quot; + lists[i]);
+    }
+    Console.ReadLine();
+ }
 </code></pre><p><br data-effect="turn"></p>
 
       
@@ -437,7 +607,7 @@ debug.Log(i);
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">标签</span>
                 
               </div>

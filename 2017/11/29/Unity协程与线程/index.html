@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Unity," />
 
 
 
@@ -80,13 +80,14 @@
 
 
 <meta name="description" content="文中所有的线程例子语言来自C#，协程例子来自unity封装好的。 #线程         首先我们来看一下线程是什么。         在很多地方介绍线程时，称其为轻量级进程。我们从简单的生活例子来解释以下系统，进程，线程之间的关系。         首先我们将系统比作为一个工厂，那么进程就是系统当中运行的一个工程，我">
+<meta name="keywords" content="Unity">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Unity协程与线程">
 <meta property="og:url" content="http://guowenyuan.com/2017/11/29/Unity协程与线程/index.html">
 <meta property="og:site_name" content="Guo">
 <meta property="og:description" content="文中所有的线程例子语言来自C#，协程例子来自unity封装好的。 #线程         首先我们来看一下线程是什么。         在很多地方介绍线程时，称其为轻量级进程。我们从简单的生活例子来解释以下系统，进程，线程之间的关系。         首先我们将系统比作为一个工厂，那么进程就是系统当中运行的一个工程，我们比作为一个工厂的某个部门，">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-29T12:52:25.191Z">
+<meta property="og:updated_time" content="2017-12-05T02:06:37.801Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Unity协程与线程">
 <meta name="twitter:description" content="文中所有的线程例子语言来自C#，协程例子来自unity封装好的。 #线程         首先我们来看一下线程是什么。         在很多地方介绍线程时，称其为轻量级进程。我们从简单的生活例子来解释以下系统，进程，线程之间的关系。         首先我们将系统比作为一个工厂，那么进程就是系统当中运行的一个工程，我们比作为一个工厂的某个部门，">
@@ -299,7 +300,7 @@
 等待最后一台安装完毕后将其拿回去装箱，老王先行回去装箱（老王就绪，线程的就绪状态，
 可以执行），而学徒小赵只能等待最后一台组装完成后才能进行下一步装箱（小赵等待，线程的
 阻塞状态）。老王回去后就开始进行装箱的操作（线程的运行状态）。公司这时候突然说要加快进度，
-于是又派了几个人去和老王一起装箱(多线程，并发执行)。
+于是又派了几个人去和老王一起装箱(多线程，并行)。
 </code></pre><p>我们可以看下代码（运行环境：unity，语言：C#）<br>‘</p>
 <pre><code>  private void Start()
 {
@@ -364,10 +365,10 @@ Debug.Log(&quot;小赵等待&quot;);
 }
 }
 }
-</code></pre><p><strong>那么在unity面板中的Debug变成了老王装箱，同事装箱，老王装箱，同事装箱。。。。各进行了10次,同时我们发现他们的运行顺序是交叉运行的，老王装一次，同事装一次，这就是我们所说的并发</strong></p>
+</code></pre><p><strong>那么在unity面板中的Debug变成了老王装箱，同事装箱，老王装箱，同事装箱。。。。各进行了10次,同时我们发现他们的运行顺序是交叉运行的，老王装一次，同事装一次，这就是我们所说的并行</strong></p>
 <p>我们来看一下啊这样多线程的好处，好处显而易见，我们每个线程干的事少了，速度快了，运行效率高了。但是，真的是这样的吗，同样的以老王的例子来举例，windows系统去开辟新的线程是需要耗费性能和空间的。也就是说如果这个热水器的部门需要给老王加帮手，他就需要招人，招人需要成本。用系统的话来说，就是需要损耗性能和空间。我对于协成的理解在于协助线程去做一些事情，简单来说，就是不再给老王招人，而是招学徒，这样的话老王既能有效率的去做一些事情，学徒们的成本也要低的多，我们把这个学徒看作协成。（网上看到某位知乎老哥的一个说法，新开辟一个线程所占用的空间为34Mb的话，那么一个协成只需要2KB,有待求证，这里只做分享，不做论证）</p>
 <p>#协程</p>
-<p>协程这里我们只做unity内部协成的分析，很多同学认为协成就是线程的缩小版，或者说是简化版，这个逻辑我不敢断言对错，但至少在我看来是不准确的。虽然协成和线程一样有自己独立的栈，共享的堆（学徒和老王的关系），但线程是由系统进行调用分配，而协成是由我们开发者进行调用分配的，本质的管理方式和单位不同。那么说完了废话，我们就来看看unity当中的协成是如何进行工作的。附上代码：</p>
+<p>协程这里我们只做unity内部协程的分析，很多同学认为协成就是线程的缩小版，或者说是简化版，这个逻辑我不敢断言对错，但至少在我看来是不准确的。虽然协程和线程一样有自己独立的栈，共享的堆（学徒和老王的关系），但线程是由系统进行调用分配，而协成是由我们开发者进行调用分配的，本质的管理方式和单位不同。那么说完了废话，我们就来看看unity当中的协成是如何进行工作的。附上代码：</p>
 <pre><code>     private void Start()
 {
     //开启协成
@@ -427,6 +428,12 @@ public IEnumerator Test01()
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Unity/" rel="tag"># Unity</a>
+          
+        </div>
       
 
       
@@ -530,7 +537,7 @@ public IEnumerator Test01()
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">标签</span>
                 
               </div>
